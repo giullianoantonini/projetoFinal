@@ -1,6 +1,5 @@
 import { BrowserRouter, Link } from "react-router-dom";
 import AppRoutes from "./Routes";
-import { Button } from "primeReact/button";
 import "./App.css";
 
 function App() {
@@ -13,6 +12,9 @@ function App() {
           </Link>
           <Link className="p-2 hover:underline" to="/departamentos">
             Departamentos
+          </Link>
+          <Link className="p-2 hover:underline" to="/departamentos/new">
+            Cadastrar Departamento
           </Link>
         </h1>
 
