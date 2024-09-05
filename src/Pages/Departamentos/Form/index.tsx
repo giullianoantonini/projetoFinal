@@ -1,50 +1,51 @@
-import { useState } from "react";
 import { Button } from "primereact/button";
+import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
+import { useNavigate } from "react-router-dom";
 
-const FormDepartamentos = () => {
-  const [nome, setNome] = useState("");
-  const [sigla, setSigla] = useState("");
-
-  const handleCadastrar = () => {
-    // Enviar os valores para o banco de dados
-    console.log("Nome:", nome);
-    console.log("Sigla:", sigla);
-  };
+const FormDepartamento = () => {
+  const navigate = useNavigate();
 
   return (
     <>
       <div className="col-span-12">
-        <h1>Departamentos</h1>
+        <div className="flex justify-between items-center my-6">
+          <h2 className="text-2x1 font bold">Cadastro de Departamento</h2>
+          <Button
+            icon="pi pi-chevron-left"
+            label="voltar"
+            severity="info"
+            rounded
+            onClick={() => {
+              navigate("/departamentos");
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="col-span-6">
+        <FloatLabel>
+          <InputText id="nome" className="w-full" />
+          <label htmlFor="nome">Nome</label>
+        </FloatLabel>
       </div>
       <div className="col-span-6">
-        <InputText
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
-          className="w-full"
-        />
+        <FloatLabel>
+          <InputText id="sigla" />
+          <label htmlFor="sigla">Sigla</label>
+        </FloatLabel>
       </div>
-      <div className="col-span-6">
-        <InputText
-          placeholder="Sigla"
-          value={sigla}
-          onChange={(e) => setSigla(e.target.value)}
-          required
-          className="w-full"
-        />
-      </div>
+
       <div className="col-span-12">
         <Button
-          label="Cadastrar"
-          onClick={handleCadastrar}
-          className="w-full"
+          label="salvar"
           severity="success"
+          icon="pi pi-save"
+          className="w-full"
         />
       </div>
     </>
   );
 };
 
-export default FormDepartamentos;
+export default FormDepartamento;
