@@ -2,9 +2,14 @@ import { Button } from "primereact/button";
 import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const FormDepartamento = () => {
   const navigate = useNavigate();
+  const [nome, setNome] = useState("");
+  const [sigla, setSigla] = useState("");
+  const [temErroNome, setTemErroNome] = useState(false);
+  const [temErroSigla, setTemErroSigla] = useState(false);
 
   return (
     <>
@@ -25,15 +30,30 @@ const FormDepartamento = () => {
 
       <div className="col-span-6">
         <FloatLabel>
-          <InputText id="nome" className="w-full" />
+          <InputText
+            id="nome"
+            className="w-full"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
           <label htmlFor="nome">Nome</label>
         </FloatLabel>
+        <small className="text-red-600" hidden={!temErroNome}>
+          Nome inválido
+        </small>
       </div>
       <div className="col-span-6">
         <FloatLabel>
-          <InputText id="sigla" />
+          <InputText
+            id="sigla"
+            value={sigla}
+            onChange={(e) => setSigla(e.target.value)}
+          />
           <label htmlFor="sigla">Sigla</label>
         </FloatLabel>
+        <small className="text-red-600" hidden={!temErroSigla}>
+          Sigla inválido
+        </small>
       </div>
 
       <div className="col-span-12">
@@ -42,6 +62,16 @@ const FormDepartamento = () => {
           severity="success"
           icon="pi pi-save"
           className="w-full"
+          onClick={() => {
+            if (nome === "") {
+              setTemErroNome(true);
+              return;
+            }
+            if (sigla === "") {
+              setTemErroSigla(true);
+              return;
+            }
+          }}
         />
       </div>
     </>
