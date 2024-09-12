@@ -5,7 +5,10 @@ import { InputText } from "primereact/inputtext";
 import { Message } from "primereact/message";
 import { useNavigate, useParams } from "react-router-dom";
 import insereDepartamento from "../../../Services/Departamentos/insereDepartamento";
-import { getDepartamento } from "../../../Services/Departamentos/editaDepartamento";
+import {
+  atualizaDepartamento,
+  getDepartamento,
+} from "../../../Services/Departamentos/editaDepartamento";
 import SubHeader from "../../../Components/SubHeader";
 
 const FormDepartamento = () => {
@@ -29,7 +32,7 @@ const FormDepartamento = () => {
       }
     };
     buscaDados();
-  });
+  }, []);
 
   const validaFormulario = () => {
     setTemErroNome(false);
@@ -100,11 +103,18 @@ const FormDepartamento = () => {
             if (validaFormulario()) {
               // Caso de sucesso
               try {
-                await insereDepartamento({
-                  nome,
-                  sigla,
-                });
-
+                if (id) {
+                  await atualizaDepartamento({
+                    id,
+                    nome,
+                    sigla,
+                  });
+                } else {
+                  await insereDepartamento({
+                    nome,
+                    sigla,
+                  });
+                }
                 navigate("/departamentos");
               } catch (e: any) {
                 if (e.response?.data?.message) {

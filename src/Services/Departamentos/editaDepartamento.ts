@@ -5,4 +5,7 @@ export const getDepartamento = async (id: any) => {
   return result;
 };
 
-export const atualizaDepartamento = async () => {};
+export const atualizaDepartamento = async (payload: any) => {
+  const result = await api.put(`departamentos/${payload.id}, payload`);
+  return result;
+};
