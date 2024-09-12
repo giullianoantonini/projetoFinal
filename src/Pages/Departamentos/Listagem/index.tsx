@@ -6,6 +6,7 @@ import { Button } from "primereact/button";
 import listaDepartamentos from "../../../Services/Departamentos/listaDepartamentos";
 import excluiDepartamento from "../../../Services/Departamentos/excluiDepartamento";
 import { Message } from "primereact/message";
+import SubHeader from "../../../Components/SubHeader";
 
 const Departamentos = () => {
   const navigate = useNavigate();
@@ -74,20 +75,13 @@ const Departamentos = () => {
 
   return (
     <>
-      <div className="col-span-12">
-        <div className="flex justify-between items-center my-6">
-          <h2 className="text-2xl font-bold">Listagem de Departamentos</h2>
-          <Button
-            icon="pi pi-plus"
-            label="novo"
-            severity="info"
-            rounded
-            onClick={() => {
-              navigate("/departamentos/new");
-            }}
-          />
-        </div>
-      </div>
+      <SubHeader
+        title="Listagem de Departamento"
+        icon="pi-plus"
+        label="novo"
+        severity="info"
+        route="/departamentos/new"
+      />
 
       <div className="col-span-12" hidden={erro === ""}>
         <Message
