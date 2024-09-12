@@ -44,6 +44,10 @@ const Departamentos = () => {
           rounded
           severity="warning"
           className="mr-2"
+          onClick={() => {
+            const { id_departamento } = departamento;
+            navigate(`/departamentos/edit/${id_departamento}`);
+          }}
         />
         <Button
           icon="pi pi-trash"

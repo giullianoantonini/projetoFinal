@@ -1,18 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { Message } from "primereact/message";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import insereDepartamento from "../../../Services/Departamentos/insereDepartamento";
+import { getDepartamento } from "../../../Services/Departamentos/editaDepartamento";
 
 const FormDepartamento = () => {
+  const { id } = useParams();
+  console.log(id);
+
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
   const [sigla, setSigla] = useState("");
   const [temErroNome, setTemErroNome] = useState(false);
   const [temErroSigla, setTemErroSigla] = useState(false);
   const [erroAPI, setErroAPI] = useState("");
+  const titulo = id ? "Edição" : "Cadastro";
+
+  useEffect(() => {
+    const buscaDados = async () => {
+      if (id) {
+        const result = await getDepartamento(id);
+        setNome(result.data[0].nome);
+        setSigla(result.data[0].sigla);
+      }
+    };
+    buscaDados();
+  });
 
   const validaFormulario = () => {
     setTemErroNome(false);
@@ -35,7 +51,7 @@ const FormDepartamento = () => {
     <>
       <div className="col-span-12">
         <div className="flex justify-between items-center my-6">
-          <h2 className="text-2xl font-bold">Cadastro de Departamento</h2>
+          <h2 className="text-2xl font-bold">{titulo} de Departamento</h2>
           <Button
             icon="pi pi-chevron-left"
             label="voltar"
@@ -93,7 +109,7 @@ const FormDepartamento = () => {
                 await insereDepartamento({
                   nome,
                   sigla,
-                })
+                });
 
                 navigate("/departamentos");
               } catch (e: any) {
